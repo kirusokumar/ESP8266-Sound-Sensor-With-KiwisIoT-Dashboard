@@ -9,15 +9,12 @@ const char* topic = "YOUR_TOPIC_ID";
 
 KiwisIoT kiwisiot(ssid, pass, topic);
 
-// Flame sensor digital pin
-#define FLAME_PIN D5
+// Sound sensor analog pin
+#define SOUND_PIN A0
 
 void setup() {
 
   Serial.begin(9600);
-
-  // Set flame sensor as input
-  pinMode(FLAME_PIN, INPUT);
 
   // Start KiwisIoT
   kiwisiot.begin();
@@ -28,25 +25,15 @@ void loop() {
   // Keep KiwisIoT connection running
   kiwisiot.run();
 
-  // Read flame sensor
-  int flameState = digitalRead(FLAME_PIN);
+  // Read sound sensor
+  int soundValue = analogRead(SOUND_PIN);
 
-  if (flameState == LOW) {
+  // Send value to KiwisIoT
+  kiwisiot.send("1", soundValue);
 
-    // Flame detected
-    Serial.println("Flame Detected!");
-
-    // Send 1 to KiwisIoT Channel 2
-    kiwisiot.send("2", 1);
-
-  } else {
-
-    // No flame
-    Serial.println("No Flame");
-
-    // Send 0 to KiwisIoT Channel 2
-    kiwisiot.send("2", 0);
-  }
+  // Show value in Serial Monitor
+  Serial.print("Sound Value = ");
+  Serial.println(soundValue);
 
   delay(1000);
 }
