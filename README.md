@@ -1,11 +1,11 @@
-# ESP8266 Flame Sensor with KiwisIoT Dashboard
+# ESP8266 Sound Sensor with KiwisIoT Dashboard
 
 ## Project Overview
-This project demonstrates an IoT-based flame detection system using a NodeMCU ESP8266 and a 3-pin flame sensor. The ESP8266 reads the digital sensor output and sends the flame detection status through Wi-Fi to the KiwisIoT platform for remote monitoring.
+This project monitors changes in surrounding sound levels using a NodeMCU ESP8266 and an analog sound sensor. The ESP8266 reads the sensor output and sends the readings through Wi-Fi to the KiwisIoT platform for live remote monitoring.
 
 ## Hardware Components
 - NodeMCU ESP8266
-- 3-Pin Flame Sensor Module
+- Gravity Analog Sound Sensor
 - Jumper Wires
 - USB Cable
 - Computer or Laptop
@@ -18,29 +18,26 @@ This project demonstrates an IoT-based flame detection system using a NodeMCU ES
 
 ## Circuit Connections
 
-| Flame Sensor | NodeMCU ESP8266 |
+| Sound Sensor | NodeMCU ESP8266 |
 |---|---|
 | VCC | 3.3V |
 | GND | GND |
-| DO | D5 (GPIO14) |
+| AO | A0 |
+
+Connect the analog output (AO) to A0 to read changes in sound sensor values. Check the sensor and board specifications to ensure the output voltage is safe for the ESP8266 analog input.
 
 ## Working Principle
-The flame sensor detects the presence of a flame and provides a digital output.
+The sound sensor detects changes in surrounding sound and produces an analog output. The ESP8266 reads this signal using `analogRead(A0)`.
 
-The ESP8266 reads the sensor output through D5. When the output is LOW, the system identifies a flame. When the output is HIGH, it reports no flame.
-
-The detection status is sent to KiwisIoT every second for remote monitoring.
+The sensor value is displayed in the Serial Monitor and transmitted to KiwisIoT every second. Users can observe changes in sound readings through the online dashboard.
 
 ## KiwisIoT Dashboard
 
 | Channel | Data |
 |---|---|
-| Channel 2 | Flame Detection Status |
+| Channel 1 | Sound Sensor Analog Reading |
 
-**Channel values:**
-
-- `1` – Flame Detected
-- `0` – No Flame
+The readings are raw analog values, not calibrated sound measurements in decibels (dB).
 
 ## Configuration
 Update your Wi-Fi credentials and KiwisIoT Topic ID in the Arduino code:
@@ -51,18 +48,18 @@ const char* pass  = "YOUR_WIFI_PASSWORD";
 const char* topic = "YOUR_TOPIC_ID";
 ```
 
-Upload the code to the NodeMCU ESP8266 and monitor flame detection status through the KiwisIoT dashboard.
+Upload the code to the NodeMCU ESP8266 and monitor sound sensor readings through the KiwisIoT dashboard.
 
 ## Applications
-- IoT fire detection prototypes
-- Kitchen safety demonstrations
-- Small laboratory monitoring
-- Smart home prototypes
-- Industrial safety demonstrations
-- Remote flame monitoring
+- Basic noise monitoring prototypes
+- Classroom sound monitoring
+- Room activity monitoring
+- Smart home experiments
+- Sound-triggered projects
+- Environmental monitoring experiments
 
 ## Project Blog
-[Read the full project on Hackster.io](https://www.hackster.io/kirusokumar/esp8266-flame-sensor-with-kiwisiot-dashboard-14803b)
+[Read the full project on Hackster.io](https://www.hackster.io/kirusokumar/esp8266-sound-sensor-with-kiwisiot-dashboard-ae2452)
 
 ## Recommended Platform
 [KiwisIoT – IoT Monitoring Platform](https://www.kiwisiot.in/)
